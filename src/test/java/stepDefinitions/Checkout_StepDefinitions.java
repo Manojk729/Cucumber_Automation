@@ -20,6 +20,7 @@ import pages.SearchPage;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.SQLOutput;
 import java.time.Duration;
 
 import static constants.Constants.driver;
@@ -32,19 +33,30 @@ public class Checkout_StepDefinitions {
         options.setCapability("appActivity", "com.myntra.android.SplashActivity");
         options.setCapability("appPackage", "com.myntra.android");
         driver = new AndroidDriver(new URL("http://127.0.0.1:4723"), options);
+        Constants.wait = new WebDriverWait(driver, Duration.ofSeconds(60));
     }
 
-    @Then("Check if search button clickable")
+    @Then("Verify user lands on HomePage")
+    public void verify_User_Lands_On_HomePage() {
+        try {
+            Constants.wait.until(ExpectedConditions.visibilityOfElementLocated(HomePage.homePagebanner1));
+            Constants.wait.until(ExpectedConditions.visibilityOfElementLocated(HomePage.homePagebanner2));
+            Assert.assertTrue(driver.findElement(HomePage.homePagebanner1).isDisplayed());
+            Assert.assertTrue(driver.findElement(HomePage.homePagebanner2).isDisplayed());
+        }catch(Exception e){
+            System.out.println("Banners are not visible");
+        }
+        Assert.assertTrue(driver.findElement(HomePage.notificationIcon).isDisplayed());
+    }
+    @Then("Check if search button is clickable")
     public void check_if_search_button_clickable() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.elementToBeClickable(HomePage.searchButton));
         Assert.assertTrue(driver.findElement(HomePage.searchButton).isDisplayed());
     }
 
-    @When("Click on Search Button")
+    @When("Click on Search button")
     public void click_on_search_bar() {
-
-        Constants.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         Constants.wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(HomePage.searchButton)));
         driver.findElement(HomePage.searchButton).click();
     }
@@ -54,9 +66,13 @@ public class Checkout_StepDefinitions {
         Assert.assertEquals(searchBarText,"Search for brands & products");
     }
 
-    @And("Enter the name of Product")
+    @And("Enter the name of product")
     public void enter_the_name_of_product() {
+       // Constants.wait.until(ExpectedConditions.elementToBeClickable(SearchPage.cameraIcon));
+        Constants.wait.until(ExpectedConditions.visibilityOfElementLocated(SearchPage.trendingBanner));
         driver.findElement(SearchPage.searchBar).sendKeys("Puma Shoes");
+        String sText=driver.findElement(SearchPage.searchBar).getText();
+        Assert.assertEquals(sText,"Puma Shoes");
         driver.pressKey(new KeyEvent(AndroidKey.ENTER));
     }
     @Then("Wishlist icon should be visible")
@@ -65,24 +81,25 @@ public class Checkout_StepDefinitions {
 
     }
 
-    @And("Scroll to the Product")
+    @And("Scroll to the product")
     public void scroll_to_the_product() {
         try {
-            Constants.wait = new WebDriverWait(driver, Duration.ofSeconds(50));
             Constants.wait.until(ExpectedConditions.visibilityOf(driver.findElement(ResultsPage.sortIcon)));
-            driver.findElement(AppiumBy.androidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"one8 x PUMA\"));"));
+            Constants.wait.until(ExpectedConditions.elementToBeClickable(ResultsPage.genderIcon));
+            Constants.wait.until(ExpectedConditions.elementToBeClickable(ResultsPage.filterIcon));
+            driver.findElement(AppiumBy.androidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"Men Alder IDP Running Shoes\"));"));
         } catch (Exception e) {
             System.out.println("Product found on top of list");
         }
     }
 
-    @And("Select the Product")
+    @And("Select the product")
     public void select_the_product() {
         driver.findElement(By.xpath("//android.widget.TextView[@text='one8 x PUMA']")).click();//click the shoe
 
     }
 
-    @And("Click on Add to Cart Button")
+    @And("Click on Add to Cart button")
     public void click_on_add_to_cart_button() {
         driver.findElement(By.xpath("//android.widget.TextView[@text='ADD TO BAG']")).click();//add to bag
 
@@ -93,7 +110,7 @@ public class Checkout_StepDefinitions {
         driver.findElement(By.xpath("//android.widget.TextView[@text='10']")).click();//selected size
 
     }
-    @Then("seller text should be visible")
+    @Then("Seller text should be visible")
     public void seller_Text_Should_Be_Visible() {
         Assert.assertTrue(driver.findElement(By.xpath("//android.view.ViewGroup[@content-desc=\"size_selector\"]/android.widget.TextView[6]")).isDisplayed());//seller text
 
@@ -126,6 +143,5 @@ public class Checkout_StepDefinitions {
     public void login_page_should_appear() {
         Assert.assertTrue(driver.findElement(By.xpath("//android.widget.TextView[@text='Login']")).isDisplayed());
     }
-
 
 }

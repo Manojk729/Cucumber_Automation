@@ -1,16 +1,17 @@
-Feature: Myntra
+Feature: Add to Cart
   Scenario: Verify checkout functionality
     Given Open the application
-    Then Check if search button clickable
-    When Click on Search Button
+    Then Verify user lands on HomePage
+    Then Check if search button is clickable
+    When Click on Search button
     Then Text in search bar should be visible
-    And  Enter the name of Product
+    And  Enter the name of product
     Then Wishlist icon should be visible
-    And Scroll to the Product
-    And Select the Product
-    And Click on Add to Cart Button
+    And Scroll to the product
+    And Select the product
+    And Click on Add to Cart button
     And Select the size of product
-    Then seller text should be visible
+    Then Seller text should be visible
     And Click the done button
     Then GO TO BAG button should be visible
     And Click on cart icon
