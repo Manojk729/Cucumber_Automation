@@ -1,5 +1,6 @@
 Feature: Add to Cart
-  Scenario: Verify checkout functionality
+
+  Scenario: Verify the user is able to successfully add a product to cart
     Given Open the application
     Then Verify user lands on HomePage
     Then Check if search button is clickable
