@@ -98,7 +98,8 @@ public class Checkout_StepDefinitions {
             Constants.wait.until(ExpectedConditions.visibilityOf(driver.findElement(ResultsPage.sortIcon)));
             Constants.wait.until(ExpectedConditions.elementToBeClickable(ResultsPage.genderIcon));
             Constants.wait.until(ExpectedConditions.elementToBeClickable(ResultsPage.filterIcon));
-            driver.findElement(AppiumBy.androidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"Men Alder IDP Running Shoes\"));"));
+            //driver.findElement(AppiumBy.androidUIAutomator("new UiScrollable(new UiSelector().scrollable(true))" + ".scrollIntoView(new UiSelector().text(\"exact_text\"))"));
+            driver.findElement(AppiumBy.androidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"WebView\"))"));
         } catch (Exception e) {
             System.out.println("Product found on top of list");
         }

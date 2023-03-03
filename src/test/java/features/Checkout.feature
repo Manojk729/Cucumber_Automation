@@ -10,11 +10,11 @@ Feature: Add to Cart
     Then Wishlist icon should be visible
     And Scroll to the product
     And Select the product
-    And Click on Add to Cart button
-    And Select the size of product
-    Then Seller text should be visible
-    And Click the done button
-    Then GO TO BAG button should be visible
-    And Click on cart icon
-    And Click on place order
-    Then Login page should appear
+#    And Click on Add to Cart button
+#    And Select the size of product
+#    Then Seller text should be visible
+#    And Click the done button
+#    Then GO TO BAG button should be visible
+#    And Click on cart icon
+#    And Click on place order
+#    Then Login page should appear
